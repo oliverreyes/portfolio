@@ -18,7 +18,7 @@ html {
 .jumbotron h1, h2 {
 	text-align: center;
 	color: white;
-	text-shadow: 3px 3px 3px rgb(0,0,0,1);
+	text-shadow: 1px 1px rgba(0,0,0,0.2);
 }
 
 .jumbo-buttons {
@@ -28,7 +28,7 @@ html {
 }
 
 .line-separator {
-	width: 450px;
+	width: 500px;
 	margin: auto;
 	border-top: 1px solid #f8f8f8;
 	border-bottom: 1px solid rgba(0,0,0,0.2);
@@ -39,6 +39,7 @@ html {
 	margin: 7px;
 	font-size: 16px;
 	color: #696969;
+	box-shadow: 1px 1px rgba(0,0,0,0.3);
 	line-height: normal;
 	-webkit-border-radius: 8px;
 		-moz-border-radius: 8px;
@@ -51,16 +52,12 @@ html {
 	color: #00BFFF;
 }
 
-.btn:active, .btn-default:active, .btn-xlg:active, {
-	background-color: white;
-	border-color: #00BFFF;
-	color: #00BFFF;
-}
-
-.container h2 {
-	color: grey;
+.container h2, h3, p {
+	color: #696969;
+	text-shadow: none;
 	text-align: left;
 }
+
 .carousel {
 	height: 400px;
 	min-width: 100%;
