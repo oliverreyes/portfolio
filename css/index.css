@@ -83,6 +83,9 @@ html {
 	background-color: #708090;
 }
 
+#projects {
+	background-color: #F5F5F5;
+}
 .education, .skills {
 	float: left;
 	text-align: center;
@@ -176,3 +179,26 @@ html {
     margin: 5px;
 }
 
+#contact {
+	background-color: #708090;
+}
+
+#contact h2 {
+	margin-left: 120px;
+	color: white;
+	text-align: left;
+}
+
+#contact li, #contact a {
+	color: white;
+}
+
+#contact li:hover,
+#contact a:hover {
+	color: #00BFFF;
+	text-decoration: none;
+}
+
+#contact .list-inline {
+	text-align: center;
+}
