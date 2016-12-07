@@ -52,15 +52,49 @@ html {
 	color: #00BFFF;
 }
 
-.container h2, h3, p {
+.container {
+	padding-top: 30px;
+	padding-bottom: 30px;	
+}
+
+.container h2, h3 {
+	color: #708090;
+	text-shadow: none;
+	text-align: left;
+}
+.container p {
 	color: #696969;
 	text-shadow: none;
 	text-align: left;
+}
+
+.about-icons img {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+}
+
+.about-icons h3, p {
+	padding-top: 5px;
+	padding-left: 20px;
+}
+
+#ed-icon, #skills-icon {
+	background-color: #708090;
+}
+
+.education, .skills {
+	float: left;
+	text-align: center;
 }
 
 .carousel {
 	height: 400px;
 	min-width: 100%;
 	margin: 0 auto;
+}
+
+.carousel-caption h2 {
+	color: #708090;
 }
 
