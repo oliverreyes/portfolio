@@ -38,7 +38,7 @@ html {
 .jumbo-buttons {
 	position: relative;
 	margin: auto;
-	left: 38%;
+	text-align: center;
 }
 
 .line-separator {
@@ -68,7 +68,7 @@ html {
 
 .container {
 	padding-top: 30px;
-	padding-bottom: 30px;	
+	padding-bottom: 30px;
 }
 
 .container h2, h3 {
