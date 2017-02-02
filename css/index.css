@@ -24,6 +24,12 @@ html {
 	text-decoration: none;
 }
 
+.affix {
+	top: 40%;
+	right: 80px;
+	position: fixed;
+}
+
 
 .jumbotron {
 	background-image: url('../static/raindrops.jpg');
@@ -81,7 +87,7 @@ html {
 	height: 50px;
 	opacity: 0.85;
 	padding: 4px;
-	border: 2px solid rgba(255,255,255,0);
+	border: 3px solid rgba(255,255,255,0);
 }
 
 #linkedin-icon:hover, 
@@ -89,7 +95,7 @@ html {
 #github-icon:hover {
 	position: relative;
 	top: -2px;
-	border: 2px solid rgba(255,255,255,1);
+	border: 3px solid rgba(255,255,255,1);
 }
 
 .icons {
@@ -97,7 +103,6 @@ html {
 	left: 40px;
 	top: 40%;
 }
-
 
 .container {
 	padding-bottom: 30px;
