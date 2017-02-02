@@ -56,30 +56,6 @@ html {
 	font-weight: bold;
 }
 
-.jumbo-buttons {
-	position: relative;
-	margin: auto;
-	text-align: center;
-}
-
-.btn-xlg {
-	padding: 50px 20px;
-	margin: 7px;
-	font-size: 16px;
-	color: #696969;
-	box-shadow: 1px 1px rgba(0,0,0,0.3);
-	line-height: normal;
-	-webkit-border-radius: 8px;
-		-moz-border-radius: 8px;
-            border-radius: 8px;
-}
-
-.btn:hover, .btn-default:hover, .btn-xlg:hover {
-	background-color: white;
-	border-color: #00BFFF;
-	color: #00BFFF;
-}
-
 #linkedin-icon, 
 #resume-icon,
 #github-icon {
@@ -106,7 +82,6 @@ html {
 
 .container {
 	padding-bottom: 30px;
-	background-color: #F0F0F0;
 }
 
 .container h2, h3 {
@@ -121,26 +96,64 @@ html {
 	text-align: left;
 }
 
-.about-icons img {
-	height: 150px;
-	width: 150px;
-	border-radius: 50%;
+.about-blurb h2 {
+	font-size: 6em;
+	text-align: center;
 }
 
-.about-icons h3, p {
+.about-blurb p {
+	font-size: 2em;
+	text-align: justify;
+}
+
+#spotlight-header h3 {
+	font-size: 3em;
+	text-align: center;
+}
+
+.spotlight-blurb p {
+	font-size: 1.7em;
+	text-align: justify;
+}
+
+#about-education {
+	background-image: url('../static/geisel.jpg');
+	background-attachment: fixed;
+	background-size: cover;
+	height: 800px;
+}
+
+.education img,
+.skills img {
+	height: 175px;
+	width: 175px;
+	opacity: 0.9;
+}
+
+.education h3, p,
+.skills h3, p {
 	padding-top: 5px;
-	padding-left: 20px;
+	text-align: center;
+	color: white;
+	opacity: 0.85;
 }
 
-#ed-icon, #skills-icon {
-	background-color: #708090;
+#about-education h3 {
+	font-size: 4em;
+}
+
+#about-education p {
+	font-size: 1.5em;
+	text-align: justify;
 }
 
 #projects {
 	background-color: #F5F5F5;
 }
+
 .education, .skills {
-	float: left;
+	padding-top: 110px;
+	align: center;
 	text-align: center;
 }
 
