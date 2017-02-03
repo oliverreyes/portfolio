@@ -9,8 +9,6 @@ html {
 .navbar-default,
 .navbar-fixed-top {
 	background-color: rgba(255,255,255,0); 
-	/* background-color: #708090;
-	border-color: #708090; */
 }
 
 .navbar-default .navbar-nav > li > a,
@@ -81,7 +79,7 @@ html {
 }
 
 .container {
-	padding-bottom: 30px;
+	padding-bottom: 60px;
 }
 
 .container h2, h3 {
@@ -96,9 +94,15 @@ html {
 	text-align: left;
 }
 
-.about-blurb h2 {
+.about-blurb h2,
+#projects h1 {
 	font-size: 6em;
 	text-align: center;
+	color: #708090;
+}
+
+#projects {
+	padding-top: 30px;
 }
 
 .about-blurb p {
@@ -143,8 +147,9 @@ html {
 }
 
 #about-education p {
-	font-size: 1.5em;
+	font-size: 2em;
 	text-align: justify;
+	margin-left: 70px;
 }
 
 #projects {
@@ -153,8 +158,7 @@ html {
 
 .education, .skills {
 	padding-top: 110px;
-	align: center;
-	text-align: center;
+	/*text-align: center;*/
 }
 
 .carousel {
