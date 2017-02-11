@@ -2,7 +2,7 @@ body,
 html {
     width: 100%;
     height: 100%;
-    font-size: 51%;
+    font-size: 60%;
 }
 
 .navbar,
@@ -14,6 +14,7 @@ html {
 .navbar-default .navbar-nav > li > a,
 .navbar-brand > a {
 	color: white;
+	line-height: 1em;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -27,37 +28,41 @@ html {
 	opacity: 0.85;
 }
 
-
 .jumbotron {
 	background-image: url('../static/raindrops.jpg');
 	background-attachment: fixed;
 	background-size: cover;
-	/* padding-top: 50px; */
-	height: 900px;
+	height: 800px;
+}
+
+.jumbotron h1, 
+#title {
+	color: white;
+	opacity: 0.85;
 }
 
 .jumbotron h1 {
 	text-align: center;
-	color: white;
-	opacity: 0.85;
 	font-size: 9em;
+}
+
+#page-title {
+	padding-top: 160px;
 }
 
 #title {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	color: white;
-	opacity: 0.85;
-	font-size: 3.4em;
+	font-size: 3.3em;
 	font-weight: bold;
 }
 
 #linkedin-icon, 
 #resume-icon,
 #github-icon {
-	width: 50px;
-	height: 50px;
+	width: 60px;
+	height: 60px;
 	opacity: 0.85;
 	padding: 4px;
 	border: 3px solid rgba(255,255,255,0);
@@ -72,9 +77,12 @@ html {
 }
 
 .icons {
-	position: absolute;
-	left: 40px;
-	top: 40%;
+	text-align: center;
+}
+
+.icons img {
+	display: inline;
+	margin: 150px 10px;
 }
 
 .container {
@@ -123,7 +131,7 @@ html {
 	background-image: url('../static/geisel.jpg');
 	background-attachment: fixed;
 	background-size: cover;
-	height: 800px;
+	height: 1000px;
 }
 
 .education img,
@@ -250,12 +258,14 @@ html {
 
 #contact {
 	background-color: #708090;
+	height: 250px;
 }
 
 #contact h2 {
 	margin-left: 120px;
 	color: white;
-	text-align: left;
+	text-align: center;
+	font-size: 6em;
 }
 
 #contact li, #contact a {
@@ -270,6 +280,12 @@ html {
 
 #contact .list-inline {
 	text-align: center;
+}
+
+.attributions {
+	position: relative;
+	right: 0px;
+	bottom: 0;
 }
 
 #template-demo {
@@ -319,11 +335,6 @@ html {
 	text-decoration: none;
 }
 
-/* smartphones */
-@media only screen and (min-width: 321px){
-	body,html { font-size: 60%; }
-}
-
 /* tablets */
 @media only screen and (min-width: 480px){
 	body,html { font-size: 78%; }
@@ -332,7 +343,29 @@ html {
 /* desktop and laptops */
 @media only screen and (min-width: 991px){
 	body,html { font-size: 95%; }
+
+	.jumbotron {
+		height: 900px;
+	}
+
 	#title {
 		font-size: 4em;
+	}
+
+	.icons {
+		position: absolute;
+		left: 40px;
+		top: 40%;
+	}
+
+	#linkedin-icon, 
+	#resume-icon,
+	#github-icon {
+		width: 50px;
+		height: 50px;
+	}
+
+	#about-education {
+		height: 800px;
 	}
 }
