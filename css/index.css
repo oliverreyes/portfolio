@@ -259,6 +259,7 @@ html {
 #contact {
 	background-color: #708090;
 	height: 250px;
+	position: relative;
 }
 
 #contact h2 {
@@ -283,9 +284,11 @@ html {
 }
 
 .attributions {
-	position: relative;
+	position: absolute;
 	right: 0px;
-	bottom: 0;
+	bottom: 0px;
+	font-size: 10%;
+	text-align: right;
 }
 
 #template-demo {
@@ -356,6 +359,11 @@ html {
 		position: absolute;
 		left: 40px;
 		top: 40%;
+	}
+
+	.icons img  {
+		display: flex;
+		margin: 20px 10px 40px;
 	}
 
 	#linkedin-icon, 
