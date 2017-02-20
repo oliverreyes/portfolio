@@ -1,30 +1,20 @@
 
-function setBoard(canvas){
-	console.log("Called");
-	var ctx = canvas.getContext("2d");
-	// default numbers
-	nCol = 8;
-	nRow = 8;
-	// square dimensions
-	sHeight = canvas.height/nRow;
-	sWidth = canvas.width/nCol;
-
-	ctx.beginPath();
-	for (var r = 0; r < nRow; r++){
-		for (var c = 0; c < nCol; c+=2){
-			if (r % 2 == 0) {
-				ctx.rect((c+1)*sWidth, r*sHeight, sWidth, sHeight);
-			}
-			else {
-				ctx.rect(c*sWidth, r*sHeight, sWidth, sHeight);
-			}
-			
+function setBoard(){
+	var nSpaces = 64;
+	var $board = $(".board");
+	for (var i = 0; i < nSpaces; i++) {
+		var colorIndex = Math.floor(i / 8 + i) % 2;
+		if (colorIndex == 0) {
+			$board.append("<div class='white' id=" + i +"></div>");
+		}
+		else {
+			$board.append("<div class='black' id=" + i +"></div>");
 		}
 	}
-	ctx.fill()
-	ctx.closePath();
+}
+
+function setPieces(canvas){
 
 }
 
-var board = document.getElementById("board");
-setBoard(board);
+setBoard();
