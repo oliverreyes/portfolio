@@ -6,8 +6,11 @@ function setBoard(){
 	var nBlack = 0;
 	window.boardArray = [];
 	// create 2D array
-	for (var j = 0; j < 8; j++){
-		window.boardArray[j] = []; 
+	for (var row = 0; row < 8; row++){
+		window.boardArray[row] = []; 
+		for (var col = 0; col < 8; col++){
+			window.boardArray[row][col] = 0; 
+		}
 	}
 
 	for (var i = 0; i < nSpaces; i++){
@@ -38,16 +41,16 @@ function setPieces(){
 	for (var r = 0; r < 8; r++){
 		for (var c = 0; c < 8; c+=2){
 			if (r == 0 || r == 2){
-				window.boardArray[r][c+1] = 0;
+				window.boardArray[r][c+1] = "W";
 			}
 			else if (r == 1){
-				window.boardArray[r][c] = 0;
+				window.boardArray[r][c] = "W";
 			}
 			else if (r == 5 || r == 7){
-				window.boardArray[r][c] = 1;
+				window.boardArray[r][c] = "R";
 			}
 			else if (r == 6){
-				window.boardArray[r][c+1] = 1;
+				window.boardArray[r][c+1] = "R";
 			}
 			
 		}
