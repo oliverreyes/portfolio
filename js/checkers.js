@@ -1,5 +1,14 @@
+var white_count = 0;
+var red_count = 0;
 
-// create board
+// Checker piece object
+function Checker(team, x, y){
+	this.team = team;
+	this.x = x;
+	this.y = y;
+}
+
+// Create board
 function setBoard(){
 	var nSpaces = 64;
 	var $board = $(".board");
@@ -27,7 +36,7 @@ function setBoard(){
 	
 }
 
-// create pieces
+// Create pieces
 function setPieces(){
 	for (var i = 0; i < 24; i++){
 		if (i < 12){
@@ -41,22 +50,25 @@ function setPieces(){
 	for (var r = 0; r < 8; r++){
 		for (var c = 0; c < 8; c+=2){
 			if (r == 0 || r == 2){
-				window.boardArray[r][c+1] = "W";
+				window.boardArray[r][c+1] = new Checker("White", c+1, r); //Insert object Piece here
+				white_count++;
 			}
 			else if (r == 1){
-				window.boardArray[r][c] = "W";
+				window.boardArray[r][c] = new Checker("White", c, r);
+				white_count++;
 			}
 			else if (r == 5 || r == 7){
-				window.boardArray[r][c] = "R";
+				window.boardArray[r][c] = new Checker("Red", c, r);
+				red_count++;
 			}
 			else if (r == 6){
-				window.boardArray[r][c+1] = "R";
+				window.boardArray[r][c+1] = new Checker("Red", c+1, r);
+				red_count++;
 			}
 			
 		}
 	}
-	console.log(window.boardArray);
-	
+	console.log(window.boardArray);	
 }
 
 function getCoord(){
