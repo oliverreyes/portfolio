@@ -1,9 +1,17 @@
 var white_count = 0;
 var red_count = 0;
 // Create global mapping
-var coordArray = [];
-var myMap = new Map(mapCoord(coordArray));
+var globalArray = [];
+var coordArray = mapCoord(globalArray);
+var myMap = new Map(coordArray);
 console.log(myMap);
+
+
+function main(){
+	setBoard();
+	setPieces();
+	// CLICK NOT WORKING, ATTR IS UNDEFINED
+}
 
 // Checker piece object
 function Checker(team, x, y){
@@ -91,11 +99,24 @@ function mapCoord(mapArray){
 	return mapArray;
 }
 
+$(".board").on("click", ".black", function(){
+	var id = $(this).attr("id");
+	console.log(id);
+});
+
+/*
+function selectPiece(){
+	var id = this.id;
+	var x = coordArray[0][0][0];
+	var y = coordArray[0][0][1];
+
+}
+*/
+
+
 
 function movePiece(){
 
 }
 
-setBoard();
-setPieces();
-mapCoord();
+
