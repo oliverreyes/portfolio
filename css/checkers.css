@@ -38,3 +38,7 @@
 .whitePiece {
 	background-color: white;
 }
+
+.selected {
+	background-color: yellow;
+}
