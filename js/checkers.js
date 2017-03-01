@@ -1,8 +1,9 @@
 var white_count = 0;
 var red_count = 0;
 // Create global mapping
-var globalArray = []; // index is visual board number, value is coords; use indexOf
+var globalArray = []; // index is visual board number, value is coords
 var coordArray = mapCoord(globalArray);
+
 
 
 function main(){
@@ -105,22 +106,40 @@ function findIndex(arr, y, x){
 	}
 }
 
-// Click function, graphic stuff
-$(".board").on("click", ".black", function(){
-	$(".black").removeClass("selected"); // reset board to black
-	var id = $(this).find("div").attr("id");
-	var checkerPiece = $(this).find("div").attr("class");
-	if (checkerPiece == "redPiece" || checkerPiece == "whitePiece"){
-		$(this).addClass("selected");
-		var openIds = movesAvailable(id);
-		for (var i = 0; i < openIds.length; i++){
-			$("#" + openIds[i]).parent().addClass("selected");
+// On ready function
+$(function(){
+	var isSelected = false;
+	var currId = 0;
+	// Click function, graphic stuff
+	$(".board").on("click", ".black", function(){
+		if (!isSelected){
+			$(".black").removeClass("selected"); // reset board to black
+			currId = $(this).find("div").attr("id");
+			var checkerPiece = $(this).find("div").attr("class");
+			if (checkerPiece == "redPiece" || checkerPiece == "whitePiece"){
+				$(this).addClass("selected");
+				var openIds = movesAvailable(currId);
+				for (var i = 0; i < openIds.length; i++){
+					$("#" + openIds[i]).parent().addClass("selected");
+				}
+				isSelected = true;
+			}
+			else {
+				console.log("No piece to move there bud");
+			}
 		}
-	}
-	else {
-		console.log("No piece to move there bud");
-	}
-});
+	});	
+	$(".board").on("click", ".selected", function(){
+		if (isSelected){
+			console.log(currId);
+			$(".black").removeClass("selected"); // reset board to black
+			var nextId = $(this).find("div").attr("id");
+			movePiece(currId, nextId);
+			isSelected = false;
+		}
+	});
+
+})
 
 
 // Receives id of space, returns available spaces
@@ -163,11 +182,25 @@ function movesAvailable(id){
 		//if different team
 }
 
-
-
-
-function movePiece(){
-
+// Move piece from current space to selected space
+function movePiece(curr, next){
+	var currY = coordArray[curr][0];
+	var currX = coordArray[curr][1];
+	var nextY = coordArray[next][0];
+	var nextX = coordArray[next][1];
+	console.log($("#" + curr).hasClass("redPiece"));
+	// Move piece to new spot, clear out old spot
+	window.boardArray[nextY][nextX] = window.boardArray[currY][currX]; 
+	window.boardArray[currY][currX] = 0;
+	// Move visual piece
+	if ($("#" + curr).hasClass("redPiece")){
+		$("#" + curr).removeClass("redPiece");
+		$("#" + next).addClass("redPiece");
+	}
+	else {
+		$("#" + curr).removeClass("whitePiece");
+		$("#" + next).addClass("whitePiece");
+	}
 }
 
 
