@@ -78,7 +78,7 @@ function setPieces(){
 			$("#" + (i+8)).addClass("redPiece");
 		} 
 	}
-	console.log(window.boardArray);	
+	//console.log(window.boardArray);	
 }
 
 // Map index of coordinates in array to visual board space number
@@ -131,7 +131,6 @@ $(function(){
 	});	
 	$(".board").on("click", ".selected", function(){
 		if (isSelected){
-			console.log(currId);
 			$(".black").removeClass("selected"); // reset board to black
 			var nextId = $(this).find("div").attr("id");
 			movePiece(currId, nextId);
@@ -148,47 +147,81 @@ function movesAvailable(id){
 	var y = coordArray[id][0];
 	var x = coordArray[id][1];
 	var current = window.boardArray[y][x];
-	console.log(current);
 	// check edge cases
 	//make recursive
-
+	//if empty
+	//if different team
 	if (current.isKing == true){
 		for (var i = -1; i < 2; i+=2){
 			for (var j = -1; j > 2; j+=2){
+				var newX = x+j;
+				var newY = y+i;
+				// UNTESTED
+				if (newX < 0 || newX > 7 || newY < 0 || newY > 7){
+					continue;
+				}
 				if (window.boardArray[y+i][x+j] == 0){
 					openSpaces.push(findIndex(coordArray, y+i, x+j));
+				}
+				else if (window.boardArray[y+i][x+i].team == current.team){
+					continue;
 				}
 			}
 		}
 	}
 	else if (current.team == "Red"){
 		for (var i = -1; i < 2; i+=2){
-			if (window.boardArray[y-1][x+i] == 0){
-				openSpaces.push(findIndex(coordArray, y-1, x+i));
+			var newX = x+i; 
+			// Edge case
+			if (newX < 0 || newX > 7){
+				continue;
+			}
+			if (window.boardArray[y-1][newX] == 0){
+				openSpaces.push(findIndex(coordArray, y-1, newX));
+			}
+			else if (window.boardArray[y-1][newX].team != current.team){
+				// Left
+				if (i == -1){
+					if (window.boardArray[y-2][newX-1] == 0){
+						console.log("left");
+					}
+				}
+				else {
+					console.log("right");
+				}
 			}
 		}
 	}
 	else if (current.team == "White"){
 		for (var i = -1; i < 2; i+=2){
-			if (window.boardArray[y+1][x+i] == 0){
-				openSpaces.push(findIndex(coordArray, y+1, x+i));
+			var newX = x+i; 
+			// Edge case
+			if (newX < 0 || newX > 7){
+				continue;
+			}
+			if (window.boardArray[y+1][newX] == 0){
+				openSpaces.push(findIndex(coordArray, y+1, newX));
+			}
+			// CHANGE
+			else if (window.boardArray[y+1][newX].team == current.team){
+				continue;
 			}
 		}
 	}
 	console.log(openSpaces);
 	return openSpaces;
-		//if empty
-		//if same team
-		//if different team
 }
 
 // Move piece from current space to selected space
 function movePiece(curr, next){
+	// Exit function if same space is selected
+	if (curr == next){
+		return;
+	}
 	var currY = coordArray[curr][0];
 	var currX = coordArray[curr][1];
 	var nextY = coordArray[next][0];
 	var nextX = coordArray[next][1];
-	console.log($("#" + curr).hasClass("redPiece"));
 	// Move piece to new spot, clear out old spot
 	window.boardArray[nextY][nextX] = window.boardArray[currY][currX]; 
 	window.boardArray[currY][currX] = 0;
