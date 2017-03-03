@@ -1,5 +1,6 @@
 var white_count = 0;
 var red_count = 0;
+var red_turn = true;
 // Create global mapping
 var globalArray = []; // index is visual board number, value is coords
 var coordArray = mapCoord(globalArray);
@@ -116,7 +117,7 @@ $(function(){
 			$(".black").removeClass("selected"); // reset board to black
 			currId = $(this).find("div").attr("id");
 			var checkerPiece = $(this).find("div").attr("class");
-			if (checkerPiece == "redPiece" || checkerPiece == "whitePiece"){
+			if (checkerPiece == "redPiece" && red_turn){
 				$(this).addClass("selected");
 				var openIds = movesAvailable(currId);
 				for (var i = 0; i < openIds.length; i++){
@@ -124,9 +125,15 @@ $(function(){
 				}
 				isSelected = true;
 			}
-			else {
-				console.log("No piece to move there bud");
+			else if (checkerPiece == "whitePiece" && !red_turn) {
+				$(this).addClass("selected");
+				var openIds = movesAvailable(currId);
+				for (var i = 0; i < openIds.length; i++){
+					$("#" + openIds[i]).parent().addClass("selected");
+				}
+				isSelected = true;
 			}
+			
 		}
 	});	
 	$(".board").on("click", ".selected", function(){
@@ -273,10 +280,12 @@ function movePiece(curr, next){
 	if ($("#" + curr).hasClass("redPiece")){
 		$("#" + curr).removeClass("redPiece");
 		$("#" + next).addClass("redPiece");
+		red_turn = false;
 	}
 	else {
 		$("#" + curr).removeClass("whitePiece");
 		$("#" + next).addClass("whitePiece");
+		red_turn = true;
 	}
 	console.log(jumpIndex);
 	return jumpIndex; // return captured piece
