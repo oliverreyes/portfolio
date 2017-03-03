@@ -137,7 +137,6 @@ $(function(){
 			isSelected = false;
 		}
 	});
-
 })
 
 
@@ -147,10 +146,6 @@ function movesAvailable(id){
 	var y = coordArray[id][0];
 	var x = coordArray[id][1];
 	var current = window.boardArray[y][x];
-	// check edge cases
-	//make recursive
-	//if empty
-	//if different team
 	if (current.isKing == true){
 		for (var i = -1; i < 2; i+=2){
 			for (var j = -1; j > 2; j+=2){
@@ -160,11 +155,31 @@ function movesAvailable(id){
 				if (newX < 0 || newX > 7 || newY < 0 || newY > 7){
 					continue;
 				}
-				if (window.boardArray[y+i][x+j] == 0){
-					openSpaces.push(findIndex(coordArray, y+i, x+j));
+				if (window.boardArray[newY][newX] == 0){
+					openSpaces.push(findIndex(coordArray, newY, newX));
 				}
-				else if (window.boardArray[y+i][x+i].team == current.team){
-					continue;
+				else if (window.boardArray[newY][newX].team != current.team){
+					// top left
+					if (i == -1 && j == -1){
+						if (window.boardArray[newY-1][newX-1] == 0){
+							openSpaces.push(findIndex(coordArray, newY-1, newX-1));
+						}
+					}
+					else if (i == -1 && j == 1){
+						if (window.boardArray[newY-1][newX+1] == 0){
+							openSpaces.push(findIndex(coordArray, newY-1, newX+1));
+						}
+					}
+					else if (i == 1 && j == -1){
+						if (window.boardArray[newY+1][newX-1] == 0){
+							openSpaces.push(findIndex(coordArray, newY+1, newX-1));
+						}
+					}
+					else {
+						if (window.boardArray[newY+1][newX+1] == 0){
+							openSpaces.push(findIndex(coordArray, newY+1, newX+1));
+						}
+					}
 				}
 			}
 		}
@@ -176,18 +191,22 @@ function movesAvailable(id){
 			if (newX < 0 || newX > 7){
 				continue;
 			}
+			// Open Space
 			if (window.boardArray[y-1][newX] == 0){
 				openSpaces.push(findIndex(coordArray, y-1, newX));
 			}
+			// Opposing Checker
 			else if (window.boardArray[y-1][newX].team != current.team){
-				// Left
+				// Left jump
 				if (i == -1){
 					if (window.boardArray[y-2][newX-1] == 0){
-						console.log("left");
+						openSpaces.push(findIndex(coordArray, y-2, newX-1));
 					}
 				}
 				else {
-					console.log("right");
+					if (window.boardArray[y-2][newX+1] == 0){
+						openSpaces.push(findIndex(coordArray, y-2, newX+1));
+					}
 				}
 			}
 		}
@@ -203,8 +222,17 @@ function movesAvailable(id){
 				openSpaces.push(findIndex(coordArray, y+1, newX));
 			}
 			// CHANGE
-			else if (window.boardArray[y+1][newX].team == current.team){
-				continue;
+			else if (window.boardArray[y+1][newX].team != current.team){
+				if (i == -1){
+					if (window.boardArray[y+2][newX-1] == 0){
+						openSpaces.push(findIndex(coordArray, y+2, newX-1));
+					}
+				}
+				else {
+					if (window.boardArray[y+2][newX+1] == 0){
+						openSpaces.push(findIndex(coordArray, y+2, newX+1));
+					}
+				}
 			}
 		}
 	}
