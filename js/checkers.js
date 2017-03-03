@@ -78,7 +78,7 @@ function setPieces(){
 			$("#" + (i+8)).addClass("redPiece");
 		} 
 	}
-	//console.log(window.boardArray);	
+	console.log(window.boardArray);	
 }
 
 // Map index of coordinates in array to visual board space number
@@ -133,7 +133,10 @@ $(function(){
 		if (isSelected){
 			$(".black").removeClass("selected"); // reset board to black
 			var nextId = $(this).find("div").attr("id");
-			movePiece(currId, nextId);
+			var jumpIndex = movePiece(currId, nextId);
+			if (jumpIndex != -1){
+				jumpPiece(jumpIndex);
+			}
 			isSelected = false;
 		}
 	});
@@ -242,14 +245,27 @@ function movesAvailable(id){
 
 // Move piece from current space to selected space
 function movePiece(curr, next){
+	var jumpIndex = -1;
 	// Exit function if same space is selected
 	if (curr == next){
-		return;
+		return jumpIndex;
 	}
 	var currY = coordArray[curr][0];
 	var currX = coordArray[curr][1];
 	var nextY = coordArray[next][0];
 	var nextX = coordArray[next][1];
+	var Ydiff = Math.abs(currY - nextY);
+	if (Ydiff == 2){
+		for (var i = 1; i < 7; i++){
+			if ((i < currY && i > nextY) || (i > currY && i < nextY)){
+				var jumpY = i;
+			}
+			else if ((i < currX && i > nextX) || (i > currX && i < nextX)){
+				var jumpX = i;
+			}
+		}
+		jumpIndex = findIndex(coordArray, jumpY, jumpX);
+	}
 	// Move piece to new spot, clear out old spot
 	window.boardArray[nextY][nextX] = window.boardArray[currY][currX]; 
 	window.boardArray[currY][currX] = 0;
@@ -262,6 +278,27 @@ function movePiece(curr, next){
 		$("#" + curr).removeClass("whitePiece");
 		$("#" + next).addClass("whitePiece");
 	}
+	console.log(jumpIndex);
+	return jumpIndex; // return captured piece
+
+}
+
+function jumpPiece(capIndex){
+	var capY = coordArray[capIndex][0];
+	var capX = coordArray[capIndex][1];
+	// Remove captured piece from 2D array
+	window.boardArray[capY][capX] = 0;
+	// Visually remove captured piece, subtract from team count
+	if ($("#" + capIndex).hasClass("redPiece")){
+		$("#" + capIndex).removeClass("redPiece");
+		red_count--;
+	}
+	else {
+		$("#" + capIndex).removeClass("whitePiece");
+		white_count--;
+	}
+	//console.log(white_count);
+	//console.log(red_count);	
 }
 
 
