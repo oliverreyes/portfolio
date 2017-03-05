@@ -1,6 +1,7 @@
 var white_count = 0;
 var red_count = 0;
 var red_turn = true;
+var jump_flag = false;
 // Create global mapping
 var globalArray = []; // index is visual board number, value is coords
 var coordArray = mapCoord(globalArray);
@@ -136,19 +137,60 @@ $(function(){
 			
 		}
 	});	
+	// Click function on selected pieces
 	$(".board").on("click", ".selected", function(){
 		if (isSelected){
 			$(".black").removeClass("selected"); // reset board to black
 			var nextId = $(this).find("div").attr("id");
 			var jumpIndex = movePiece(currId, nextId);
+			isSelected = false;
+			// If jumped piece
 			if (jumpIndex != -1){
 				jumpPiece(jumpIndex);
+				var checker = $(this).find("div").attr("class");
+				jump_flag = true;
+				// Check for continuous jumps
+				// PROBLEMS HERE, JUMP FLAG? NOT MOVING PIECE AFTER SECOND SELECTION
+				// IT SAYS CHECKERPIECE IS NOT DEFINED???
+				if (checker == "redPiece" && !red_turn){
+					var openIds = movesAvailable(nextId);
+					// Check if available jumps
+					if (openIds.length < 1){
+						isSelected = false;
+						jump_flag = false;
+						return;
+					}
+					$(this).addClass("selected");
+					for (var i = 0; i < openIds.length; i++){
+						$("#" + openIds[i]).parent().addClass("selected");
+					}
+					currId = nextId;
+					isSelected = true;
+					jump_flag = false;
+					//red_turn = ???
+				}
+				else if (checker == "whitePiece" && red_turn) {
+					var openIds = movesAvailable(nextId);
+					// Check if available jumps
+					if (openIds.length < 1){
+						isSelected = false;
+						jump_flag = false;
+						return;
+					}
+					$(this).addClass("selected");
+					for (var i = 0; i < openIds.length; i++){
+						$("#" + openIds[i]).parent().addClass("selected");
+					}
+					currId = nextId;
+					isSelected = true;
+					jump_flag = false;
+				}
+
 			}
-			isSelected = false;
+			
 		}
 	});
 })
-
 
 // Receives id of space, returns available spaces
 function movesAvailable(id){
@@ -166,6 +208,9 @@ function movesAvailable(id){
 					continue;
 				}
 				if (window.boardArray[newY][newX] == 0){
+					if (jump_flag){
+						continue;
+					}
 					openSpaces.push(findIndex(coordArray, newY, newX));
 				}
 				else if (window.boardArray[newY][newX].team != current.team){
@@ -197,25 +242,35 @@ function movesAvailable(id){
 	else if (current.team == "Red"){
 		for (var i = -1; i < 2; i+=2){
 			var newX = x+i; 
+			var yEdge = y-1;
 			// Edge case
-			if (newX < 0 || newX > 7){
+			if (newX < 0 || newX > 7 || yEdge < 0){
 				continue;
 			}
 			// Open Space
 			if (window.boardArray[y-1][newX] == 0){
+				// If jump flag is true, ignore open spaces
+				if (jump_flag){
+					continue;
+				}
 				openSpaces.push(findIndex(coordArray, y-1, newX));
 			}
 			// Opposing Checker
 			else if (window.boardArray[y-1][newX].team != current.team){
+				var newY = y-2;
+				// Edge case
+				if (newY < 0){
+					continue;
+				}
 				// Left jump
 				if (i == -1){
-					if (window.boardArray[y-2][newX-1] == 0){
-						openSpaces.push(findIndex(coordArray, y-2, newX-1));
+					if (window.boardArray[newY][newX-1] == 0){
+						openSpaces.push(findIndex(coordArray, newY, newX-1));
 					}
 				}
 				else {
-					if (window.boardArray[y-2][newX+1] == 0){
-						openSpaces.push(findIndex(coordArray, y-2, newX+1));
+					if (window.boardArray[newY][newX+1] == 0){
+						openSpaces.push(findIndex(coordArray, newY, newX+1));
 					}
 				}
 			}
@@ -224,23 +279,31 @@ function movesAvailable(id){
 	else if (current.team == "White"){
 		for (var i = -1; i < 2; i+=2){
 			var newX = x+i; 
+			var yEdge = y-1;
 			// Edge case
-			if (newX < 0 || newX > 7){
+			if (newX < 0 || newX > 7 || yEdge > 7){
 				continue;
 			}
 			if (window.boardArray[y+1][newX] == 0){
+				if (jump_flag){
+					continue;
+				}
 				openSpaces.push(findIndex(coordArray, y+1, newX));
 			}
-			// CHANGE
 			else if (window.boardArray[y+1][newX].team != current.team){
+				var newY = y+2;
+				// Edge case
+				if (newY > 7){
+					continue;
+				}
 				if (i == -1){
-					if (window.boardArray[y+2][newX-1] == 0){
-						openSpaces.push(findIndex(coordArray, y+2, newX-1));
+					if (window.boardArray[newY][newX-1] == 0){
+						openSpaces.push(findIndex(coordArray, newY, newX-1));
 					}
 				}
 				else {
-					if (window.boardArray[y+2][newX+1] == 0){
-						openSpaces.push(findIndex(coordArray, y+2, newX+1));
+					if (window.boardArray[newY][newX+1] == 0){
+						openSpaces.push(findIndex(coordArray, newY, newX+1));
 					}
 				}
 			}
@@ -250,7 +313,7 @@ function movesAvailable(id){
 	return openSpaces;
 }
 
-// Move piece from current space to selected space
+// Move piece from current space to selected space, returns jumped piece
 function movePiece(curr, next){
 	var jumpIndex = -1;
 	// Exit function if same space is selected
