@@ -2,6 +2,7 @@ var white_count = 0;
 var red_count = 0;
 var red_turn = true;
 var jump_flag = false;
+var king_spaces = [0, 1, 2, 3, 28, 29, 30, 31];
 // Create global mapping
 var globalArray = []; // index is visual board number, value is coords
 var coordArray = mapCoord(globalArray);
@@ -150,8 +151,6 @@ $(function(){
 				var checker = $(this).find("div").attr("class");
 				jump_flag = true;
 				// Check for continuous jumps
-				// PROBLEMS HERE, JUMP FLAG? NOT MOVING PIECE AFTER SECOND SELECTION
-				// IT SAYS CHECKERPIECE IS NOT DEFINED???
 				if (checker == "redPiece" && !red_turn){
 					var openIds = movesAvailable(nextId);
 					// Check if available jumps
@@ -199,8 +198,9 @@ function movesAvailable(id){
 	var x = coordArray[id][1];
 	var current = window.boardArray[y][x];
 	if (current.isKing == true){
+		console.log("king");
 		for (var i = -1; i < 2; i+=2){
-			for (var j = -1; j > 2; j+=2){
+			for (var j = -1; j < 2; j+=2){
 				var newX = x+j;
 				var newY = y+i;
 				// UNTESTED
@@ -214,6 +214,12 @@ function movesAvailable(id){
 					openSpaces.push(findIndex(coordArray, newY, newX));
 				}
 				else if (window.boardArray[newY][newX].team != current.team){
+					// Edge cases
+					var doubleX = newX+j;
+					var doubleY = newY+i;
+					if (doubleY < 0 || doubleY > 7 || doubleX < 0 || doubleX > 7){
+						continue;
+					}
 					// top left
 					if (i == -1 && j == -1){
 						if (window.boardArray[newY-1][newX-1] == 0){
@@ -339,15 +345,31 @@ function movePiece(curr, next){
 	// Move piece to new spot, clear out old spot
 	window.boardArray[nextY][nextX] = window.boardArray[currY][currX]; 
 	window.boardArray[currY][currX] = 0;
+	
+	// If end of board reached, make king
+	for (var k = 0; k < king_spaces.length; k++){
+		if (king_spaces[k] == next){
+			makeKing(nextX, nextY);
+		}
+	}
+
 	// Move visual piece
 	if ($("#" + curr).hasClass("redPiece")){
 		$("#" + curr).removeClass("redPiece");
 		$("#" + next).addClass("redPiece");
+		if (window.boardArray[nextY][nextX].isKing == true){
+			$("#" + curr + "> img").remove();
+			$("#" + next).prepend("<img src='../static/crown_icon.png' class='king'/>");
+		}
 		red_turn = false;
 	}
 	else {
 		$("#" + curr).removeClass("whitePiece");
 		$("#" + next).addClass("whitePiece");
+		if (window.boardArray[nextY][nextX].isKing == true){
+			$("#" + curr + "> img").remove();
+			$("#" + next).prepend("<img src='../static/crown_icon.png' class='king'/>");
+		}
 		red_turn = true;
 	}
 	console.log(jumpIndex);
@@ -358,6 +380,12 @@ function movePiece(curr, next){
 function jumpPiece(capIndex){
 	var capY = coordArray[capIndex][0];
 	var capX = coordArray[capIndex][1];
+	console.log(window.boardArray[capY][capX]);
+	// Remove king symbol
+	if (window.boardArray[capY][capX].isKing == true){
+		console.log("here");
+		$("#" + capIndex + "> img").remove();
+	}
 	// Remove captured piece from 2D array
 	window.boardArray[capY][capX] = 0;
 	// Visually remove captured piece, subtract from team count
@@ -373,4 +401,10 @@ function jumpPiece(capIndex){
 	//console.log(red_count);	
 }
 
+function makeKing(x, y){
+	if (window.boardArray[y][x].isKing == false){
+		window.boardArray[y][x].isKing = true;
+		console.log(window.boardArray[y][x]);
+	}
+}
 
