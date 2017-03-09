@@ -29,7 +29,7 @@ html {
 }
 
 .jumbotron {
-	background-image: url('../static/raindrops.jpg');
+	background-image: url('../static/raindrops.jpg'); 
 	background-attachment: fixed;
 	background-size: cover;
 	height: 800px;
@@ -90,7 +90,7 @@ html {
 }
 
 .container h2, h3 {
-	color: #708090;
+	color: #1189ad;
 	text-shadow: none;
 	text-align: left;
 }
@@ -105,7 +105,7 @@ html {
 #projects h1 {
 	font-size: 6em;
 	text-align: center;
-	color: #708090;
+	color: #1189ad;
 }
 
 #projects {
@@ -128,7 +128,7 @@ html {
 }
 
 #about-education {
-	background-image: url('../static/geisel.jpg');
+	background-color: #1189ad;
 	background-attachment: fixed;
 	background-size: cover;
 	height: 1000px;
@@ -165,7 +165,6 @@ html {
 
 .education, .skills {
 	padding-top: 110px;
-	/*text-align: center;*/
 }
 
 .carousel {
@@ -257,7 +256,7 @@ html {
 }
 
 #contact {
-	background-color: #708090;
+	background-color: #1189ad;
 	height: 250px;
 	position: relative;
 }
