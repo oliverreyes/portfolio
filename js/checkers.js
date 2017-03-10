@@ -3,6 +3,7 @@ var red_count = 0;
 var red_turn = true;
 var jump_flag = false;
 var king_spaces = [0, 1, 2, 3, 28, 29, 30, 31];
+var king_flag = false;
 // Create global mapping
 var globalArray = []; // index is visual board number, value is coords
 var coordArray = mapCoord(globalArray);
@@ -148,6 +149,12 @@ $(function(){
 			// If jumped piece
 			if (jumpIndex != -1){
 				jumpPiece(jumpIndex);
+				winCondition();
+				// If promoted to king, turn ends
+				if (king_flag == true){
+					king_flag = false;
+					return;
+				}
 				var checker = $(this).find("div").attr("class");
 				jump_flag = true;
 				// Check for continuous jumps
@@ -166,7 +173,6 @@ $(function(){
 					currId = nextId;
 					isSelected = true;
 					jump_flag = false;
-					//red_turn = ???
 				}
 				else if (checker == "whitePiece" && red_turn) {
 					var openIds = movesAvailable(nextId);
@@ -184,9 +190,7 @@ $(function(){
 					isSelected = true;
 					jump_flag = false;
 				}
-
 			}
-			
 		}
 	});
 })
@@ -345,14 +349,12 @@ function movePiece(curr, next){
 	// Move piece to new spot, clear out old spot
 	window.boardArray[nextY][nextX] = window.boardArray[currY][currX]; 
 	window.boardArray[currY][currX] = 0;
-	
 	// If end of board reached, make king
 	for (var k = 0; k < king_spaces.length; k++){
 		if (king_spaces[k] == next){
 			makeKing(nextX, nextY);
 		}
 	}
-
 	// Move visual piece
 	if ($("#" + curr).hasClass("redPiece")){
 		$("#" + curr).removeClass("redPiece");
@@ -374,7 +376,6 @@ function movePiece(curr, next){
 	}
 	console.log(jumpIndex);
 	return jumpIndex; // return captured piece
-
 }
 
 function jumpPiece(capIndex){
@@ -404,7 +405,16 @@ function jumpPiece(capIndex){
 function makeKing(x, y){
 	if (window.boardArray[y][x].isKing == false){
 		window.boardArray[y][x].isKing = true;
-		console.log(window.boardArray[y][x]);
+		king_flag = true;
+	}
+}
+
+function winCondition(){
+	if (red_count == 0){
+		alert("White wins!");
+	}
+	else if (white_count == 0){
+		alert("Red wins!");
 	}
 }
 
