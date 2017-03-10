@@ -108,6 +108,10 @@ html {
 	color: #1189ad;
 }
 
+#projects h1 {
+	padding-bottom: 30px;
+}
+
 #projects {
 	padding-top: 30px;
 }
@@ -159,12 +163,30 @@ html {
 	margin-left: 70px;
 }
 
-#projects {
-	background-color: #F5F5F5;
-}
-
 .education, .skills {
 	padding-top: 110px;
+}
+
+.thumbnail {
+	position: relative;
+	height: 325px;
+	background-color: #1189ad;
+}
+
+.thumbnail:hover {
+	position: relative;
+	top: -2px;
+	background-color: black;
+}
+
+.caption {
+	position: absolute;
+	bottom: 0;
+	margin-left: 20px;
+}
+
+.caption h5 {
+	color: white;
 }
 
 .carousel {
