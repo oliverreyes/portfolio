@@ -82,7 +82,7 @@ function setPieces(){
 			$("#" + (i+8)).addClass("redPiece");
 		} 
 	}
-	console.log(window.boardArray);	
+	//console.log(window.boardArray);	
 }
 
 // Map index of coordinates in array to visual board space number
@@ -202,12 +202,10 @@ function movesAvailable(id){
 	var x = coordArray[id][1];
 	var current = window.boardArray[y][x];
 	if (current.isKing == true){
-		console.log("king");
 		for (var i = -1; i < 2; i+=2){
 			for (var j = -1; j < 2; j+=2){
 				var newX = x+j;
 				var newY = y+i;
-				// UNTESTED
 				if (newX < 0 || newX > 7 || newY < 0 || newY > 7){
 					continue;
 				}
@@ -319,7 +317,7 @@ function movesAvailable(id){
 			}
 		}
 	}
-	console.log(openSpaces);
+	//console.log(openSpaces);
 	return openSpaces;
 }
 
@@ -374,17 +372,15 @@ function movePiece(curr, next){
 		}
 		red_turn = true;
 	}
-	console.log(jumpIndex);
 	return jumpIndex; // return captured piece
 }
 
 function jumpPiece(capIndex){
 	var capY = coordArray[capIndex][0];
 	var capX = coordArray[capIndex][1];
-	console.log(window.boardArray[capY][capX]);
+	//console.log(window.boardArray[capY][capX]);
 	// Remove king symbol
 	if (window.boardArray[capY][capX].isKing == true){
-		console.log("here");
 		$("#" + capIndex + "> img").remove();
 	}
 	// Remove captured piece from 2D array
@@ -397,9 +393,7 @@ function jumpPiece(capIndex){
 	else {
 		$("#" + capIndex).removeClass("whitePiece");
 		white_count--;
-	}
-	//console.log(white_count);
-	//console.log(red_count);	
+	}	
 }
 
 function makeKing(x, y){
