@@ -36,14 +36,21 @@ html {
 }
 
 .jumbotron h1, 
-#title {
+#title,
+.landing-page h1 {
 	color: white;
 	opacity: 0.85;
 }
 
-.jumbotron h1 {
+.jumbotron h1, 
+.landing-page h1 {
 	text-align: center;
 	font-size: 9em;
+}
+
+.landing-page {
+	height: 400px;
+	background-color: #1189ad; 
 }
 
 #page-title {
@@ -369,6 +376,10 @@ html {
 
 	.jumbotron {
 		height: 900px;
+	}
+
+	.landing-page{
+		height: 450px;
 	}
 
 	#title {
