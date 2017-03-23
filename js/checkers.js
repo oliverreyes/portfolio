@@ -412,3 +412,18 @@ function winCondition(){
 	}
 }
 
+// Navigation disappear
+$(window).scroll(navDisappear);
+
+function navDisappear(){
+	var navPos = 100;
+	var scrollPos = $(window).scrollTop();
+	var $nav = $(".navbar");
+	if (scrollPos > navPos){
+		$nav.fadeOut("slow");
+	}
+	else {
+		$nav.fadeIn("slow");
+	}
+}
+

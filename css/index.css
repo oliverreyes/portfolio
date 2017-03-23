@@ -57,6 +57,10 @@ html {
 	padding-top: 160px;
 }
 
+#sec-page-title {
+	padding-top: 130px;
+}
+
 #title {
 	position: absolute;
 	left: 50%;
